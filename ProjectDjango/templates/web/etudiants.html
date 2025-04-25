@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="fw-bold">
+                <i class="fas fa-user-graduate me-2"></i>Gestion des Étudiants
+            </h2>
+        </div>
+        <div class="col text-end">
+            <a href="{% url 'create_etudiant' %}" class="btn btn-primary">
+                <i class="fas fa-user-plus me-2"></i>Nouvel Étudiant
+            </a>
+        </div>
+    </div>
+
+    {% if messages %}
+        {% include 'parts/alerts.html' %}
+    {% endif %}
+
+    <!-- Barre de recherche -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="GET" action="{% url 'search' %}" class="row g-3">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" 
+                               class="form-control" 
+                               name="query" 
+                               placeholder="Rechercher un étudiant...">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search me-2"></i>Rechercher
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if etudiants %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Département</th>
+                                <th>Email</th>
+                                <th>Adresse</th>
+                                <th>Date de Naissance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for etudiant in etudiants %}
+                                <tr>
+                                    <td>{{ etudiant.id }}</td>
+                                    <td>{{ etudiant.nom_etudiant }}</td>
+                                    <td>{{ etudiant.prenom_etudiant }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            {{ etudiant.departement.nom_departement|default:"Non assigné" }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ etudiant.email }}" class="text-decoration-none">
+                                            {{ etudiant.email }}
+                                        </a>
+                                    </td>
+                                    <td>{{ etudiant.adresse|default:"-" }}</td>
+                                    <td>{{ etudiant.date_naissance|date:"d/m/Y" }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{% url 'view_etudiant' etudiant.id %}" 
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{% url 'update_etudiant' etudiant.id %}" 
+                                               class="btn btn-sm btn-outline-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'delete_etudiant' etudiant.id %}" 
+                                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')"
+                                               class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Aucun étudiant n'a été enregistré pour le moment.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

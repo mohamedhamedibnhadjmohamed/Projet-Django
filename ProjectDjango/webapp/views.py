@@ -292,3 +292,41 @@ def delete_departement(request, id):
     except Exception as e:
         messages.error(request, f"Erreur lors de la suppression du département: {str(e)}")
         return redirect('departements')
+
+@login_required(login_url='login')
+def search_departement(request):
+    """Vue pour la recherche de départements"""
+    query = request.GET.get('query', '').strip()
+    results = []
+
+    try:
+        if query:
+            results = Departement.objects.filter(
+                Q(nom_departement__icontains=query) |
+                Q(description__icontains=query)
+            ).order_by('nom_departement')
+            
+            if not results:
+                messages.info(request, _('Aucun résultat trouvé pour votre recherche.'))
+    except Exception as e:
+        logger.error(f"Erreur lors de la recherche de départements : {str(e)}")
+        messages.error(request, _('Une erreur est survenue lors de la recherche.'))
+
+    context = {'results': results, 'query': query}
+    return render(request, 'web/search_departement.html', context)
+
+@login_required(login_url='login')
+def etudiants(request):
+    """Vue pour la gestion des étudiants"""
+    try:
+        etudiants = Etudiant.objects.all().order_by('-created_at')
+        context = {'etudiants': etudiants}
+        return render(request, 'web/etudiants.html', context)
+    except Exception as e:
+        logger.error(f"Erreur lors du chargement des étudiants : {str(e)}")
+        messages.error(request, _('Une erreur est survenue lors du chargement des étudiants.'))
+        return redirect('dashboard')
+
+def privacy(request):
+    """Vue pour la page de politique de confidentialité"""
+    return render(request, 'web/privacy.html')
