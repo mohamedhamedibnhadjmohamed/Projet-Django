@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title mb-0">
+                        <i class="fas fa-user-graduate me-2"></i>
+                        Détails de l'Étudiant
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <!-- Photo de profil et informations principales -->
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle mb-3">
+                            <i class="fas fa-user fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="mb-1">{{ etudiant.nom_etudiant|capfirst }} {{ etudiant.prenom_etudiant|capfirst }}</h3>
+                        <p class="text-muted">
+                            <i class="fas fa-id-card me-1"></i> ID: {{ etudiant.id }}
+                        </p>
+                    </div>
+
+                    <!-- Informations détaillées -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-card mb-3">
+                                <h5 class="info-title">
+                                    <i class="fas fa-envelope me-2"></i>Email
+                                </h5>
+                                <p class="info-content">
+                                    <a href="mailto:{{ etudiant.email }}" class="text-decoration-none">
+                                        {{ etudiant.email }}
+                                    </a>
+                                </p>
+                            </div>
+                            
+                            <div class="info-card mb-3">
+                                <h5 class="info-title">
+                                    <i class="fas fa-building me-2"></i>Département
+                                </h5>
+                                <p class="info-content">
+                                    <span class="badge bg-primary">
+                                        {{ etudiant.departement.nom_departement }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="info-card mb-3">
+                                <h5 class="info-title">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Adresse
+                                </h5>
+                                <p class="info-content">{{ etudiant.adresse }}</p>
+                            </div>
+                            
+                            <div class="info-card mb-3">
+                                <h5 class="info-title">
+                                    <i class="fas fa-birthday-cake me-2"></i>Date de naissance
+                                </h5>
+                                <p class="info-content">{{ etudiant.date_naissance|date:"d/m/Y" }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Métadonnées -->
+                    <div class="text-muted small mt-4">
+                        <p class="mb-1">
+                            <i class="fas fa-calendar-plus me-1"></i>
+                            Créé le: {{ etudiant.created_at|date:"d/m/Y H:i" }}
+                        </p>
+                        {% if etudiant.updated_at %}
+                        <p class="mb-0">
+                            <i class="fas fa-calendar-edit me-1"></i>
+                            Dernière modification: {{ etudiant.updated_at|date:"d/m/Y H:i" }}
+                        </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Boutons d'action -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Retour
+                        </a>
+                        <div>
+                            <a href="{% url 'update_etudiant' etudiant.id %}" class="btn btn-primary me-2">
+                                <i class="fas fa-edit me-2"></i>Modifier
+                            </a>
+                            <a href="{% url 'delete_etudiant' etudiant.id %}" 
+                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')" 
+                               class="btn btn-danger">
+                                <i class="fas fa-trash-alt me-2"></i>Supprimer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+        background-color: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        border: 3px solid #0d6efd;
+    }
+    
+    .info-card {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        height: 100%;
+    }
+    
+    .info-title {
+        color: #0d6efd;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-content {
+        margin-bottom: 0;
+        font-size: 1.1rem;
+    }
+</style>
+{% endblock %}

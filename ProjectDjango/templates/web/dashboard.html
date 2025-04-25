@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <!-- En-tête du tableau de bord -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="card-title mb-0">
+                    <i class="fas fa-tachometer-alt me-2"></i>Tableau de Bord
+                </h2>
+                <div>
+                    <a href="{% url 'create_etudiant' %}" class="btn btn-primary me-2">
+                        <i class="fas fa-user-plus me-2"></i>Nouvel Étudiant
+                    </a>
+                    <a href="{% url 'create_departement' %}" class="btn btn-success">
+                        <i class="fas fa-building me-2"></i>Nouveau Département
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="departements-tab" data-bs-toggle="tab" 
+                    data-bs-target="#departements" type="button" role="tab">
+                <i class="fas fa-building me-2"></i>Départements
+            </button>
+        </li>
+    </ul>
+        afficher les departements
+
+    <!-- Onglets -->
+    <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="etudiants-tab" data-bs-toggle="tab" 
+                    data-bs-target="#etudiants" type="button" role="tab">
+                <i class="fas fa-user-graduate me-2"></i>Étudiants
+            </button>
+        </li>
+    </ul>
+
+    <!-- Contenu des onglets -->
+    <div class="tab-content" id="dashboardTabsContent">
+        <!-- Onglet Étudiants -->
+        <div class="tab-pane fade show active" id="etudiants" role="tabpanel">
+            <!-- Barre de recherche -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="GET" action="{% url 'search' %}" class="row g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" 
+                                       class="form-control" 
+                                       name="query" 
+                                       placeholder="Rechercher un étudiant...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-search me-2"></i>Rechercher
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Liste des étudiants -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if etudiants %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Département</th>
+                                        <th>Email</th>
+                                        <th>Adresse</th>
+                                        <th>Date de Naissance</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for etudiant in etudiants %}
+                                        <tr>
+                                            <td>{{ etudiant.id }}</td>
+                                            <td>{{ etudiant.nom_etudiant }}</td>
+                                            <td>{{ etudiant.prenom_etudiant }}</td>
+                                            <td>
+                                                <span class="badge bg-primary">
+                                                    {{ etudiant.departement.nom_departement }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="mailto:{{ etudiant.email }}" class="text-decoration-none">
+                                                    {{ etudiant.email }}
+                                                </a>
+                                            </td>
+                                            <td>{{ etudiant.adresse }}</td>
+                                            <td>{{ etudiant.date_naissance|date:"d/m/Y" }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="{% url 'view_etudiant' etudiant.id %}" 
+                                                       class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{% url 'update_etudiant' etudiant.id %}" 
+                                                       class="btn btn-sm btn-outline-warning">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="{% url 'delete_etudiant' etudiant.id %}" 
+                                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?')"
+                                                       class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Aucun étudiant n'a été enregistré pour le moment.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Départements -->
+        <div class="tab-pane fade" id="departements" role="tabpanel">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if departements %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nom</th>
+                                        <th>Description</th>
+                                        <th>Nombre d'Étudiants</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for departement in departements %}
+                                        <tr>
+                                            <td>{{ departement.id }}</td>
+                                            <td>
+                                                <span class="badge bg-primary">
+                                                    {{ departement.nom_departement }}
+                                                </span>
+                                            </td>
+                                            <td>{{ departement.description|truncatechars:50 }}</td>
+                                            <td>
+                                                <span class="badge bg-info">
+                                                    {{ departement.etudiant_set.count }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="{% url 'view_departement' departement.id %}" 
+                                                       class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{% url 'update_departement' departement.id %}" 
+                                                       class="btn btn-sm btn-outline-warning">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="{% url 'delete_departement' departement.id %}" 
+                                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce département ?')"
+                                                       class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Aucun département n'a été créé pour le moment.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .nav-tabs .nav-link {
+        color: #6c757d;
+        border: none;
+        padding: 1rem 1.5rem;
+        font-weight: 500;
+    }
+    
+    .nav-tabs .nav-link.active {
+        color: #0d6efd;
+        background-color: transparent;
+        border-bottom: 3px solid #0d6efd;
+    }
+    
+    .nav-tabs .nav-link:hover {
+        color: #0d6efd;
+        border-color: transparent;
+    }
+    
+    .table th {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .badge {
+        font-size: 0.9em;
+        padding: 0.5em 0.8em;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title mb-0">
+                        <i class="fas fa-building me-2"></i>
+                        {% if departement %}Modifier{% else %}Nouveau{% endif %} Département
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        {% if messages %}
+                            {% include 'parts/alerts.html' %}
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="nom_departement" class="form-label">
+                                <i class="fas fa-tag me-1"></i>Nom du Département
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="nom_departement" 
+                                   name="nom_departement" 
+                                   value="{{ departement.nom_departement|default:'' }}"
+                                   required>
+                            <div class="form-text">
+                                Entrez le nom du département (ex: Informatique, Mathématiques, etc.)
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">
+                                <i class="fas fa-align-left me-1"></i>Description
+                            </label>
+                            <textarea class="form-control" 
+                                      id="description" 
+                                      name="description" 
+                                      rows="4"
+                                      required>{{ departement.description|default:'' }}</textarea>
+                            <div class="form-text">
+                                Décrivez brièvement le département et ses objectifs
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'departements' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Retour
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>
+                                {% if departement %}Mettre à jour{% else %}Créer{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

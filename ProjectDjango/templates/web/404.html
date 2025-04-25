@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-8 text-center">
+            <div class="error-container">
+                <h1 class="display-1 fw-bold text-primary">404</h1>
+                <h2 class="mb-4">Page non trouvée</h2>
+                <div class="error-icon mb-4">
+                    <i class="fas fa-exclamation-triangle fa-4x text-warning"></i>
+                </div>
+                <p class="lead mb-4">
+                    Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
+                </p>
+                <div class="suggestions mb-4">
+                    <p>Voici quelques suggestions :</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Vérifiez l'URL pour d'éventuelles erreurs</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Retournez à la page d'accueil</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Contactez l'administrateur si le problème persiste</li>
+                    </ul>
+                </div>
+                <div class="action-buttons">
+                    <a href="{% url 'index' %}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-home me-2"></i>Page d'accueil
+                    </a>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-tachometer-alt me-2"></i>Tableau de bord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .min-vh-100 {
+        min-height: 100vh;
+    }
+    
+    .error-container {
+        padding: 2rem;
+        background-color: #f8f9fa;
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    
+    .error-icon {
+        animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-30px);
+        }
+        60% {
+            transform: translateY(-15px);
+        }
+    }
+    
+    .suggestions {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin: 2rem 0;
+    }
+    
+    .suggestions ul li {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        background-color: #f8f9fa;
+    }
+    
+    .action-buttons {
+        margin-top: 2rem;
+    }
+</style>
+{% endblock %}

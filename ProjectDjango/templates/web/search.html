@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="text-center" style="padding: 0px 80px;">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Département</th>
+                <th scope="col">Email</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if results %}
+                {% for etudiant in results %}
+                    <tr>
+                        <td>{{ etudiant.id }}</td>
+                        <td>{{ etudiant.nom_etudiant }}</td>
+                        <td>{{ etudiant.prenom_etudiant }}</td>
+                        <td>{{ etudiant.departement.nom_departement }}</td>
+                        <td>{{ etudiant.email }}</td>
+                        <td>{{ etudiant.adresse }}</td>
+                        <td>{{ etudiant.date_naissance }}</td>
+                        <td>
+                            <a href="{% url 'view_etudiant' etudiant.id %}" class="btn btn-outline-primary btn-sm">
+                                Voir
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">
+                        <br><br>
+                        <div class="alert alert-warning" role="alert">
+                            Aucun résultat trouvé pour "{{ query }}".
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Titre de la page -->
+            <h1 class="text-center mb-4">Créer un étudiant</h1>
+            <hr class="mb-4">
+
+            <!-- Formulaire de création -->
+            <form method="POST" novalidate class="needs-validation">
+                {% csrf_token %}
+                
+                <!-- Affichage du formulaire -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {{ form.nom_etudiant.label_tag }}
+                            {{ form.nom_etudiant }}
+                            {% if form.nom_etudiant.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.nom_etudiant.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.prenom_etudiant.label_tag }}
+                            {{ form.prenom_etudiant }}
+                            {% if form.prenom_etudiant.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.prenom_etudiant.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.date_naissance.label_tag }}
+                            {{ form.date_naissance }}
+                            {% if form.date_naissance.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.date_naissance.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.departement.label_tag }}
+                            {{ form.departement }}
+                            {% if form.departement.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.departement.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.adresse.label_tag }}
+                            {{ form.adresse }}
+                            {% if form.adresse.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.adresse.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Créer l'étudiant
+                    </button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary ms-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

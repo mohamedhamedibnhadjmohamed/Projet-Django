@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container bg-light shadow-md p-5 form-layout">
+
+    <!-- Titre de la page -->
+    <h1>Mettre à jour un étudiant</h1>
+    <hr style="border: 1px solid #000; margin: 20px 0;">
+
+    <!-- Formulaire de mise à jour -->
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <!-- Bouton de soumission -->
+        <div class="text-center">
+            <br>
+            <button type="submit" class="btn btn-outline-dark">Mettre à jour l'étudiant</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
