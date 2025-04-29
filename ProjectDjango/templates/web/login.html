@@ -23,60 +23,60 @@
                             <h2 class="mb-0">
                                 <i class="fas fa-sign-in-alt me-2"></i>Connexion
                             </h2>
-                        </div>
-                        <div class="card-body p-4">
+                </div>
+                <div class="card-body p-4">
                             <h2 class="text-center mb-4 d-none d-md-block">
                                 <i class="fas fa-sign-in-alt me-2"></i>Connexion
                             </h2>
 
-                            {% if messages %}
+                    {% if messages %}
                                 {% include 'parts/alerts.html' %}
-                            {% endif %}
+                    {% endif %}
 
-                            <form method="POST" class="needs-validation" novalidate>
-                                {% csrf_token %}
-                                
-                                <div class="mb-4">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
                                     <label for="username" class="form-label">
                                         <i class="fas fa-user me-2"></i>Nom d'utilisateur
                                     </label>
-                                    <input type="text" 
+                                <input type="text" 
                                            class="form-control form-control-lg" 
                                            id="username" 
-                                           name="username" 
+                                       name="username" 
                                            required
                                            placeholder="Entrez votre nom d'utilisateur">
-                                </div>
-
-                                <div class="mb-4">
+                        </div>
+                        
+                        <div class="mb-4">
                                     <label for="password" class="form-label">
                                         <i class="fas fa-lock me-2"></i>Mot de passe
                                     </label>
-                                    <input type="password" 
+                                <input type="password" 
                                            class="form-control form-control-lg" 
                                            id="password" 
-                                           name="password" 
+                                       name="password" 
                                            required
                                            placeholder="Entrez votre mot de passe">
-                                </div>
-
+                        </div>
+                        
                                 <div class="mb-4 form-check">
                                     <input type="checkbox" class="form-check-input" id="remember">
                                     <label class="form-check-label" for="remember">Se souvenir de moi</label>
-                                </div>
-
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-sign-in-alt me-2"></i>Se connecter
-                                    </button>
-                                </div>
-                            </form>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                            </button>
+                        </div>
+                    </form>
 
                             <div class="text-center mt-4">
                                 <p class="mb-0">Vous n'avez pas de compte ? 
-                                    <a href="{% url 'register' %}" class="text-decoration-none">
+                        <a href="{% url 'register' %}" class="text-decoration-none">
                                         <i class="fas fa-user-plus me-1"></i>Créez un compte
-                                    </a>
+                        </a>
                                 </p>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
     .bg-primary {
         background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
     }
-
+    
     /* Style pour la case à cocher */
     .form-check-input:checked {
         background-color: #0d6efd;

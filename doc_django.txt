@@ -1,0 +1,16 @@
+$ python3 -m venv env
+$ source env/Scripts/activate
+$ pip install django
+$ django-admin startproject ProjectDjango
+$ cd ProjectDjango
+$ django-admin startapp webapp
+$ python manage.py runserver
+
+$ python manage.py makemigrations
+$ python manage.py migrate 
+
+$ pip install django-widget-tweaks
+$ pip install django-crispy-forms
+$ pip install django-crispy-forms crispy-bootstrap5
+
+
